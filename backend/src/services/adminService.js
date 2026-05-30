@@ -17,15 +17,8 @@ const getDashboardStats = async () => {
   };
 };
 
-const createUserByAdmin = async (
-  name,
-  email,
-  password,
-  address,
-  role
-) => {
-  const hashedPassword =
-    await bcrypt.hash(password, 10);
+const createUserByAdmin = async (name, email, password, address, role) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const result = await pool.query(
     `
@@ -34,13 +27,7 @@ const createUserByAdmin = async (
     VALUES ($1, $2, $3, $4, $5)
     RETURNING id, name, email, role
     `,
-    [
-      name,
-      email,
-      hashedPassword,
-      address,
-      role,
-    ]
+    [name, email, hashedPassword, address, role],
   );
 
   return result.rows[0];

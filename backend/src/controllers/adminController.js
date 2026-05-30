@@ -1,13 +1,10 @@
 // Handles admin dashboard requests.
 
-const {
-  getDashboardStats, createUserByAdmin
-} = require("../services/adminService");
+const { getDashboardStats, createUserByAdmin } = require("../services/adminService");
 
 const dashboard = async (req, res) => {
   try {
-    const stats =
-      await getDashboardStats();
+    const stats = await getDashboardStats();
 
     return res.status(200).json({
       success: true,
@@ -25,22 +22,18 @@ const dashboard = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      password,
-      address,
-      role,
-    } = req.body;
+    const { name, email, password, address, role } = req.body;
 
-    const user =
-      await createUserByAdmin(
-        name,
-        email,
-        password,
-        address,
-        role
-      );
+    const existingUser = await findUserByEmail(email);
+
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already registered",
+      });
+    }
+
+    const user = await createUserByAdmin(name, email, password, address, role);
 
     return res.status(201).json({
       success: true,
@@ -58,5 +51,5 @@ const createUser = async (req, res) => {
 
 module.exports = {
   dashboard,
-  createUser
+  createUser,
 };
