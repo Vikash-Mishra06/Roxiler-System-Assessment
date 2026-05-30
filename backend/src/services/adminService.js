@@ -61,11 +61,22 @@ const findUserById = async (id) => {
   return result.rows[0];
 };
 
-module.exports = {
-  getDashboardStats,
-  createUserByAdmin,
-  createStore,
-  findUserById,
+const findStoreByEmail = async (email) => {
+  const result = await pool.query(
+    "SELECT * FROM stores WHERE email = $1",
+    [email]
+  );
+
+  return result.rows[0];
+};
+
+const findStoreByOwnerId = async (ownerId) => {
+  const result = await pool.query(
+    "SELECT * FROM stores WHERE owner_id = $1",
+    [ownerId]
+  );
+
+  return result.rows[0];
 };
 
 module.exports = {
@@ -73,4 +84,5 @@ module.exports = {
   createUserByAdmin,
   createStore,
   findUserById,
+  findStoreByEmail,
 };

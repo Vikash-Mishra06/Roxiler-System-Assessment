@@ -73,6 +73,24 @@ const addStore = async (req, res) => {
       });
     }
 
+    const existingStore = await findStoreByEmail(email);
+
+    if (existingStore) {
+      return res.status(400).json({
+        success: false,
+        message: "Store email already exists",
+      });
+    }
+
+    const assignedStore = await findStoreByOwnerId(ownerId);
+
+    if (assignedStore) {
+      return res.status(400).json({
+        success: false,
+        message: "Store owner already has a store",
+      });
+    }
+
     const store = await createStore(name, email, address, ownerId);
 
     return res.status(201).json({
