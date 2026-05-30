@@ -1,6 +1,10 @@
 // Handles admin dashboard requests.
 
-const { getDashboardStats, createUserByAdmin } = require("../services/adminService");
+const {
+  getDashboardStats,
+  createUserByAdmin,
+} = require("../services/adminService");
+const { createStore, findUserById } = require("../services/adminService");
 
 const dashboard = async (req, res) => {
   try {
@@ -49,7 +53,44 @@ const createUser = async (req, res) => {
   }
 };
 
+const addStore = async (req, res) => {
+  try {
+    const { name, email, address, ownerId } = req.body;
+
+    const owner = await findUserById(ownerId);
+
+    if (!owner) {
+      return res.status(404).json({
+        success: false,
+        message: "Store owner not found",
+      });
+    }
+
+    if (owner.role !== "STORE_OWNER") {
+      return res.status(400).json({
+        success: false,
+        message: "Selected user is not a store owner",
+      });
+    }
+
+    const store = await createStore(name, email, address, ownerId);
+
+    return res.status(201).json({
+      success: true,
+      data: store,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to create store",
+    });
+  }
+};
+
 module.exports = {
   dashboard,
   createUser,
+  addStore,
 };

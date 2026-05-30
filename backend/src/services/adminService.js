@@ -33,7 +33,44 @@ const createUserByAdmin = async (name, email, password, address, role) => {
   return result.rows[0];
 };
 
+const createStore = async (
+  name,
+  email,
+  address,
+  ownerId
+) => {
+  const result = await pool.query(
+    `
+    INSERT INTO stores
+    (name, email, address, owner_id)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *
+    `,
+    [name, email, address, ownerId]
+  );
+
+  return result.rows[0];
+};
+
+const findUserById = async (id) => {
+  const result = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [id]
+  );
+
+  return result.rows[0];
+};
+
 module.exports = {
   getDashboardStats,
   createUserByAdmin,
+  createStore,
+  findUserById,
+};
+
+module.exports = {
+  getDashboardStats,
+  createUserByAdmin,
+  createStore,
+  findUserById,
 };
