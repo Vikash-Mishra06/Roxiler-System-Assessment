@@ -1,6 +1,7 @@
 // Admin related database operations. Dashboard statistics are fetched here.
 
 const pool = require("../config/db");
+const bcrypt = require("bcryptjs");
 
 const getDashboardStats = async () => {
   const [users, stores, ratings] = await Promise.all([
@@ -16,6 +17,36 @@ const getDashboardStats = async () => {
   };
 };
 
+const createUserByAdmin = async (
+  name,
+  email,
+  password,
+  address,
+  role
+) => {
+  const hashedPassword =
+    await bcrypt.hash(password, 10);
+
+  const result = await pool.query(
+    `
+    INSERT INTO users
+    (name, email, password, address, role)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING id, name, email, role
+    `,
+    [
+      name,
+      email,
+      hashedPassword,
+      address,
+      role,
+    ]
+  );
+
+  return result.rows[0];
+};
+
 module.exports = {
   getDashboardStats,
+  createUserByAdmin,
 };

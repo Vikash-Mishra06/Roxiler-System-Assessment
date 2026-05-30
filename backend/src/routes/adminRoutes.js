@@ -1,24 +1,12 @@
 const express = require("express");
-
-const {
-  dashboard,
-} = require("../controllers/adminController");
-
-const authenticateUser = require(
-  "../middleware/authMiddleware"
-);
-
-const authorizeRoles = require(
-  "../middleware/roleMiddleware"
-);
+const { dashboard, createUser } = require("../controllers/adminController");
+const authenticateUser = require("../middleware/authMiddleware");
+const authorizeRoles = require("../middleware/roleMiddleware");
 
 const router = express.Router();
 
-router.get(
-  "/dashboard",
-  authenticateUser,
-  authorizeRoles("ADMIN"),
-  dashboard
-);
+router.get("/dashboard", authenticateUser, authorizeRoles("ADMIN"), dashboard);
+
+router.post("/users", authenticateUser, authorizeRoles("ADMIN"), createUser);
 
 module.exports = router;
