@@ -5,6 +5,7 @@ const {
   createUserByAdmin,
 } = require("../services/adminService");
 const { createStore, findUserById } = require("../services/adminService");
+const { findUserByEmail } = require("../services/authService");
 
 const dashboard = async (req, res) => {
   try {
