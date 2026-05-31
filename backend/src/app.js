@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const testRoutes = require("./routes/testRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const storeRoutes = require("./routes/storeRoutes");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/stores", storeRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({
