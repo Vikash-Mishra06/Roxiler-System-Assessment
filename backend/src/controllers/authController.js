@@ -3,7 +3,11 @@
 const bcrypt = require("bcryptjs");
 const generateToken = require("../utils/generateToken");
 const { validateSignupData } = require("../validators/authValidator");
-const { findUserByEmail, createUser, updateUserPassword } = require("../services/authService");
+const {
+  findUserByEmail,
+  createUser,
+  updateUserPassword,
+} = require("../services/authService");
 
 const register = async (req, res) => {
   try {
@@ -82,7 +86,12 @@ const login = async (req, res) => {
     return res.status(200).json({
       success: true,
       token,
-      role: user.role,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (error) {
     console.error(error);
