@@ -7,6 +7,7 @@ const testRoutes = require("./routes/testRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const storeRoutes = require("./routes/storeRoutes");
 const ratingRoutes = require("./routes/ratingRoutes");
+const storeOwnerRoutes = require("./routes/storeOwnerRoutes");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/test", testRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/stores", storeRoutes);
 app.use("/api/ratings", ratingRoutes);
+app.use("/api/store-owner", storeOwnerRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({
