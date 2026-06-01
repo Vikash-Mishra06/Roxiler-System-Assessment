@@ -70,9 +70,17 @@ const AdminDashboard = () => {
                     {stats.totalRatings}
                 </p>
             </div>
-            <Link to="/admin/users">
-                Manage Users
-            </Link>
+            <div>
+                <Link to="/admin/users">
+                    Manage Users
+                </Link>
+            </div>
+
+            <div>
+                <Link to="/admin/stores">
+                    Manage Stores
+                </Link>
+            </div>
         </div>
     );
 };

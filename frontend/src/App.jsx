@@ -14,6 +14,8 @@ import StoreOwnerDashboard from "./pages/StoreOwnerDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminUsersPage from "./pages/AdminUsersPage";
 
+import AdminStoresPage from "./pages/AdminStoresPage";
+
 function App() {
   return (
     <Routes>
@@ -66,6 +68,15 @@ function App() {
         element={
           <ProtectedRoute>
             <AdminUsersPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/stores"
+        element={
+          <ProtectedRoute>
+            <AdminStoresPage />
           </ProtectedRoute>
         }
       />
