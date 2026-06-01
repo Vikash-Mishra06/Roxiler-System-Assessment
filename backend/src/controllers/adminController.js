@@ -3,6 +3,7 @@
 const {
   getDashboardStats,
   createUserByAdmin,
+  getUsers,
 } = require("../services/adminService");
 const { createStore, findUserById } = require("../services/adminService");
 const { findUserByEmail } = require("../services/authService");
@@ -108,8 +109,44 @@ const addStore = async (req, res) => {
   }
 };
 
+const getUsersList = async (
+  req,
+  res
+) => {
+  try {
+    const {
+      search = "",
+      role = "",
+      sortBy = "name",
+      order = "ASC",
+    } = req.query;
+
+    const users =
+      await getUsers(
+        search,
+        role,
+        sortBy,
+        order
+      );
+
+    return res.status(200).json({
+      success: true,
+      data: users,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message:
+        "Failed to fetch users",
+    });
+  }
+};
+
 module.exports = {
   dashboard,
   createUser,
   addStore,
+  getUsersList,
 };

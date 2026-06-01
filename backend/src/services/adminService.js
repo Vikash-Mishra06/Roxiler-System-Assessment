@@ -79,10 +79,60 @@ const findStoreByOwnerId = async (ownerId) => {
   return result.rows[0];
 };
 
+const getUsers = async (
+  search = "",
+  role = "",
+  sortBy = "name",
+  order = "ASC"
+) => {
+  const allowedSortFields = [
+    "name",
+    "email",
+    "role",
+  ];
+
+  const safeSortField =
+    allowedSortFields.includes(sortBy)
+      ? sortBy
+      : "name";
+
+  const safeOrder =
+    order.toUpperCase() === "DESC"
+      ? "DESC"
+      : "ASC";
+
+  const result = await pool.query(
+    `
+    SELECT
+      id,
+      name,
+      email,
+      address,
+      role
+    FROM users
+    WHERE
+      (
+        name ILIKE $1
+        OR email ILIKE $1
+        OR address ILIKE $1
+      )
+      AND (
+        $2 = ''
+        OR role = $2
+      )
+    ORDER BY ${safeSortField} ${safeOrder}
+    `,
+    [`%${search}%`, role]
+  );
+
+  return result.rows;
+};
+
 module.exports = {
   getDashboardStats,
   createUserByAdmin,
   createStore,
   findUserById,
   findStoreByEmail,
+  getUsers,
 };
