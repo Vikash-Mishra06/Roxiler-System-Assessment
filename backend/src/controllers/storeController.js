@@ -6,8 +6,14 @@ const getStores = async (req, res) => {
   try {
     const { search = "" } = req.query;
 
+    const userId =
+      req.user?.id || null;
+
     const stores =
-      await getAllStores(search);
+      await getAllStores(
+        search,
+        userId
+      );
 
     return res.status(200).json({
       success: true,
@@ -18,7 +24,8 @@ const getStores = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Failed to fetch stores",
+      message:
+        "Failed to fetch stores",
     });
   }
 };

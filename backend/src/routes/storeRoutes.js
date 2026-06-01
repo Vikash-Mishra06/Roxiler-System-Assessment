@@ -1,11 +1,10 @@
 const express = require("express");
 
-const {
-  getStores,
-} = require("../controllers/storeController");
+const { getStores } = require("../controllers/storeController");
+const authenticateUser = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/", getStores);
+router.get("/", authenticateUser, getStores);
 
 module.exports = router;
