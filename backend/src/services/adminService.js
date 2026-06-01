@@ -128,6 +128,81 @@ const getUsers = async (
   return result.rows;
 };
 
+const getStores = async (
+  search = "",
+  sortBy = "name",
+  order = "ASC"
+) => {
+  const allowedSortFields = [
+    "name",
+    "email",
+    "address",
+  ];
+
+  const safeSortField =
+    allowedSortFields.includes(sortBy)
+      ? sortBy
+      : "name";
+
+  const safeOrder =
+    order.toUpperCase() === "DESC"
+      ? "DESC"
+      : "ASC";
+
+  const result = await pool.query(
+    `
+    SELECT
+      s.id,
+      s.name,
+      s.email,
+      s.address,
+      COALESCE(
+        ROUND(AVG(r.rating), 1),
+        0
+      ) AS rating
+    FROM stores s
+    LEFT JOIN ratings r
+      ON s.id = r.store_id
+    WHERE
+      s.name ILIKE $1
+      OR s.email ILIKE $1
+      OR s.address ILIKE $1
+    GROUP BY s.id
+    ORDER BY ${safeSortField} ${safeOrder}
+    `,
+    [`%${search}%`]
+  );
+
+  return result.rows;
+};
+
+const getUserDetails = async (userId) => {
+  const result = await pool.query(
+    `
+    SELECT
+      u.id,
+      u.name,
+      u.email,
+      u.address,
+      u.role,
+      COALESCE(
+        ROUND(AVG(r.rating), 1),
+        0
+      ) AS rating
+    FROM users u
+    LEFT JOIN stores s
+      ON s.owner_id = u.id
+    LEFT JOIN ratings r
+      ON r.store_id = s.id
+    WHERE u.id = $1
+    GROUP BY u.id
+    `,
+    [userId]
+  );
+
+  return result.rows[0];
+};
+
 module.exports = {
   getDashboardStats,
   createUserByAdmin,
@@ -135,4 +210,6 @@ module.exports = {
   findUserById,
   findStoreByEmail,
   getUsers,
+  getStores,
+  getUserDetails
 };

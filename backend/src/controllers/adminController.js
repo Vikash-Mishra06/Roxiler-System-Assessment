@@ -1,10 +1,6 @@
 // Handles admin dashboard requests.
 
-const {
-  getDashboardStats,
-  createUserByAdmin,
-  getUsers,
-} = require("../services/adminService");
+const { getDashboardStats, createUserByAdmin, getUsers, getStores, getUserDetails,} = require("../services/adminService");
 const { createStore, findUserById } = require("../services/adminService");
 const { findUserByEmail } = require("../services/authService");
 
@@ -109,10 +105,7 @@ const addStore = async (req, res) => {
   }
 };
 
-const getUsersList = async (
-  req,
-  res
-) => {
+const getUsersList = async (req, res) => {
   try {
     const {
       search = "",
@@ -121,13 +114,7 @@ const getUsersList = async (
       order = "ASC",
     } = req.query;
 
-    const users =
-      await getUsers(
-        search,
-        role,
-        sortBy,
-        order
-      );
+    const users = await getUsers(search, role, sortBy, order);
 
     return res.status(200).json({
       success: true,
@@ -138,8 +125,66 @@ const getUsersList = async (
 
     return res.status(500).json({
       success: false,
+      message: "Failed to fetch users",
+    });
+  }
+};
+
+const getStoresList = async (req, res) => {
+  try {
+    const {
+      search = "",
+      sortBy = "name",
+      order = "ASC",
+    } = req.query;
+
+    const stores =
+      await getStores(
+        search,
+        sortBy,
+        order
+      );
+
+    return res.status(200).json({
+      success: true,
+      data: stores,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
       message:
-        "Failed to fetch users",
+        "Failed to fetch stores",
+    });
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user =
+      await getUserDetails(id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message:
+        "Failed to fetch user",
     });
   }
 };
@@ -149,4 +194,6 @@ module.exports = {
   createUser,
   addStore,
   getUsersList,
+  getStoresList,
+  getUserById
 };
