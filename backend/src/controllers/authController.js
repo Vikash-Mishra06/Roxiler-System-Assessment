@@ -3,7 +3,7 @@
 const bcrypt = require("bcryptjs");
 const generateToken = require("../utils/generateToken");
 const { validateSignupData } = require("../validators/authValidator");
-const { findUserByEmail, createUser } = require("../services/authService");
+const { findUserByEmail, createUser, updateUserPassword } = require("../services/authService");
 
 const register = async (req, res) => {
   try {
@@ -75,6 +75,7 @@ const login = async (req, res) => {
 
     const token = generateToken({
       id: user.id,
+      email: user.email,
       role: user.role,
     });
 
@@ -93,7 +94,54 @@ const login = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await findUserByEmail(req.user.email);
+
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+
+    if (!isPasswordCorrect) {
+      return res.status(400).json({
+        success: false,
+        message: "Current password is incorrect",
+      });
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,16}$/;
+
+    if (!passwordRegex.test(newPassword)) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Password must be 8-16 characters and include one uppercase letter and one special character",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await updateUserPassword(req.user.id, hashedPassword);
+
+    return res.status(200).json({
+      success: true,
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update password",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  changePassword,
 };
