@@ -19,6 +19,38 @@ Built as part of the Roxiler Systems Full Stack Intern Coding Challenge.
 
 ---
 
+## Application Screenshots
+
+### Login Page
+
+![Login Page](screenshots/login-page.png)
+
+### Register Page
+
+![Register Page](screenshots/register-page.png)
+
+### Admin Dashboard
+
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### User Management
+
+![User Management](screenshots/user-management.png)
+
+### Store Management
+
+![Store Management](screenshots/store-management.png)
+
+### Store Rating Interface
+
+![Store Rating Interface](screenshots/store-rating-page.png)
+
+### Store Owner Dashboard
+
+![Store Owner Dashboard](screenshots/store-owner-dashboard.png)
+
+---
+
 ## Live Features
 
 The platform supports three user roles:
