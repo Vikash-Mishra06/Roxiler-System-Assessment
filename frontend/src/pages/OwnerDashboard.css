@@ -1,0 +1,207 @@
+/* src/pages/OwnerDashboard.css */
+
+/* Top Action Header Bar Navigation */
+.owner-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.owner-navbar h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.owner-logout-btn {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.owner-logout-btn:hover {
+  color: #dc2626;
+  border-color: #fca5a5;
+  background-color: #fef2f2;
+}
+
+/* Action Container for Logout and Change Password */
+.owner-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.owner-change-pwd-link {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.owner-change-pwd-link:hover {
+  color: #2563eb;
+  background-color: #eff6ff;
+}
+
+/* Core Layout Shell */
+.owner-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Operational Headline Content */
+.owner-intro {
+  margin-bottom: 28px;
+}
+
+.owner-intro p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Metric Display System Grid */
+.owner-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.owner-metric-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.owner-metric-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.owner-metric-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.owner-metric-value.score {
+  color: #f59e0b; /* Amber warning metric token override */
+}
+
+/* Section Subheaders */
+.owner-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+/* Table Containment Structure */
+.owner-table-shell {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.owner-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.owner-table th {
+  background-color: #f8fafc;
+  color: #64748b;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.owner-table td {
+  padding: 14px 16px;
+  color: #0f172a;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.owner-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Inline Rating Token Node */
+.score-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  color: #334155;
+  border-radius: 4px;
+}
+
+/* Empty State Card block */
+.owner-empty-state {
+  padding: 40px 24px;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* Loading Wrapper */
+.owner-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  font-size: 0.875rem;
+  color: #64748b;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Responsive Overrides */
+@media (max-width: 640px) {
+  .owner-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

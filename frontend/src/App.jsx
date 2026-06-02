@@ -15,6 +15,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminUsersPage from "./pages/AdminUsersPage";
 
 import AdminStoresPage from "./pages/AdminStoresPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 function App() {
   return (
@@ -77,6 +78,15 @@ function App() {
         element={
           <ProtectedRoute>
             <AdminStoresPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/change-password"
+        element={
+          <ProtectedRoute>
+            <ChangePasswordPage />
           </ProtectedRoute>
         }
       />
