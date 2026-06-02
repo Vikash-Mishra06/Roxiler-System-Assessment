@@ -31,15 +31,15 @@ Built as part of the Roxiler Systems Full Stack Intern Coding Challenge.
 
 ### Admin Dashboard
 
-![Admin Dashboard](screenshots/admin-dashboard.png)
+![Admin Dashboard](screenshots/admin-dashboard-page.png)
 
 ### User Management
 
-![User Management](screenshots/user-management.png)
+![User Management](screenshots/user-management-page.png)
 
 ### Store Management
 
-![Store Management](screenshots/store-management.png)
+![Store Management](screenshots/store-management-page.png)
 
 ### Store Rating Interface
 
@@ -47,7 +47,7 @@ Built as part of the Roxiler Systems Full Stack Intern Coding Challenge.
 
 ### Store Owner Dashboard
 
-![Store Owner Dashboard](screenshots/store-owner-dashboard.png)
+![Store Owner Dashboard](screenshots/store-owner-page.png)
 
 ---
 
